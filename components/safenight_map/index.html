@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap');
-:root{--bg:#0A0F1F;--surface:#121936;--text:#E5E7EB;--muted:#A3AAC2;--border:#2A3566;--teal:#2DD4BF;--magenta:#E879F9;--coral:#FB923C;--cyan:#22D3EE;--indigo:#4F46E5;--bar:#1E2750;--mapbg:#0B1226;--grid:rgba(120,140,220,.07)}
+:root{--bg:#0A0F1F;--surface:#121936;--text:#E5E7EB;--muted:#A3AAC2;--border:#2A3566;--teal:#2DD4BF;--safe:#22C55E;--risk:#EF4444;--magenta:#E879F9;--coral:#FB923C;--cyan:#22D3EE;--indigo:#4F46E5;--bar:#1E2750;--mapbg:#0B1226;--grid:rgba(120,140,220,.07)}
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:transparent;color:var(--text);font-family:Inter,system-ui,sans-serif;font-size:14px}
 h4,.hd{font-family:Sora,Inter,system-ui,sans-serif}
@@ -22,7 +22,7 @@ svg#ov{position:absolute;left:0;top:0;width:1px;height:1px;overflow:visible}
 .legend{left:10px;bottom:10px;padding:8px 10px;font-size:12px;display:flex;flex-direction:column;gap:5px;max-width:78%}
 .legend .it{display:flex;align-items:center;gap:8px}
 .sw{display:inline-block;width:30px;height:0;flex:none}
-.sw.low{border-top:6px solid var(--teal);border-radius:4px}.sw.short{border-top:3px dotted var(--magenta)}
+.sw.low{border-top:6px solid var(--safe);border-radius:4px}.sw.short{border-top:3px dotted var(--risk)}
 .sw.hz{width:11px;height:11px;border-radius:3px;background:var(--coral);transform:rotate(45deg);margin:0 10px}
 .sw.cell{width:14px;height:14px;border-radius:3px;border:1px solid var(--border);margin:0 8px}
 .ctrls{right:10px;top:10px;display:flex;flex-direction:column;overflow:hidden}
@@ -36,8 +36,8 @@ svg#ov{position:absolute;left:0;top:0;width:1px;height:1px;overflow:visible}
 .panel{display:flex;flex-direction:column;gap:9px;min-width:0}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:11px 14px;cursor:pointer;transition:box-shadow .2s,border-color .2s,transform .12s;animation:rise .4s ease both}
 .card:hover{transform:translateY(-1px)}.card:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}
-.card.sel.low{border-color:var(--teal);box-shadow:0 0 0 1px var(--teal),0 0 26px -6px var(--teal)}
-.card.sel.short{border-color:var(--magenta);box-shadow:0 0 0 1px var(--magenta),0 0 26px -6px var(--magenta)}
+.card.sel.low{border-color:var(--safe);box-shadow:0 0 0 1px var(--safe),0 0 26px -6px var(--safe)}
+.card.sel.short{border-color:var(--risk);box-shadow:0 0 0 1px var(--risk),0 0 26px -6px var(--risk)}
 .ctop{display:flex;align-items:center;gap:10px}.ctop h4{margin:0;font-size:16px;flex:1}
 .pill{font-size:11px;font-weight:600;padding:2px 9px;border-radius:99px;border:1px solid var(--border);color:var(--muted)}
 .pill.on{color:var(--text);border-color:var(--text)}
@@ -115,7 +115,7 @@ function onRender(args){
 
 function applyTheme(){
   var T=A.theme||{}, r=document.documentElement.style, dark=(T.mode!=="light");
-  var map={bg:'--bg',surface:'--surface',text:'--text',muted:'--muted',border:'--border',teal:'--teal',magenta:'--magenta',coral:'--coral',cyan:'--cyan',indigo:'--indigo',bar:'--bar'};
+  var map={bg:'--bg',surface:'--surface',text:'--text',muted:'--muted',border:'--border',teal:'--teal',safe:'--safe',risk:'--risk',magenta:'--magenta',coral:'--coral',cyan:'--cyan',indigo:'--indigo',bar:'--bar'};
   for(var k in map){ if(T[k]) r.setProperty(map[k],T[k]); }
   r.setProperty('--mapbg',dark?'#0B1226':'#EAF0FA');
   r.setProperty('--grid',dark?'rgba(120,140,220,.07)':'rgba(40,60,140,.08)');
@@ -249,7 +249,7 @@ function drawOverlay(dropPin){
   var R=curRoutes(), showR=R&&S.showRoutes&&S.searched&&S.state!=='no_route';
   if(showR){
     var g=svgEl('g',{},ov); D.routes={};
-    [['short',T.magenta],['low',T.teal]].forEach(function(kv){
+    [['short',T.risk],['low',T.safe]].forEach(function(kv){
       var k=kv[0], col=kv[1], sel=(S.sel===k), P=R[k].path.map(function(p){var q=rel(p[0],p[1]);return q;});
       var halo=svgEl('path',{d:dstr(P),fill:'none',stroke:col,'stroke-width':k==='low'?(sel?16:11):(sel?9:6),'stroke-opacity':sel?.28:.12,'stroke-linecap':'round','stroke-linejoin':'round'},g);
       var main=svgEl('path',{d:dstr(P),fill:'none',stroke:col,'stroke-width':k==='low'?(sel?6.5:5):(sel?4.5:3.2),'stroke-opacity':sel?1:.8,'stroke-linecap':'round','stroke-linejoin':'round'},g);

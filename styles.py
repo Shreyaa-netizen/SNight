@@ -18,13 +18,13 @@ FONT_BODY = "Inter"
 THEMES = {
     "dark": dict(
         bg=MIDNIGHT, surface="#121936", input="#0F1530", text=MIST, muted="#A3AAC2",
-        border="#2A3566", teal="#2DD4BF", magenta=MAGENTA, coral="#FB923C", cyan=CYAN,
+        border="#2A3566", safe="#22C55E", risk="#EF4444", teal="#2DD4BF", magenta=MAGENTA, coral="#FB923C", cyan=CYAN,
         indigo=INDIGO, indigo_hover="#6366F1", bar="#1E2750", glow1="rgba(79,70,229,.28)",
         glow2="rgba(34,211,238,.12)", note="rgba(34,211,238,.08)", warn="rgba(251,146,60,.10)",
     ),
     "light": dict(
         bg="#F4F6FB", surface="#FFFFFF", input="#FFFFFF", text="#0A0F1F", muted="#4B5563",
-        border="#CBD2E1", teal="#0D9488", magenta="#C026D3", coral="#EA580C", cyan="#0891B2",
+        border="#CBD2E1", safe="#16A34A", risk="#DC2626", teal="#0D9488", magenta="#C026D3", coral="#EA580C", cyan="#0891B2",
         indigo=INDIGO, indigo_hover="#4338CA", bar="#E5E7EB", glow1="rgba(79,70,229,.12)",
         glow2="rgba(34,211,238,.10)", note="rgba(8,145,178,.08)", warn="rgba(234,88,12,.08)",
     ),
@@ -44,7 +44,7 @@ def get_css(mode: str = "dark") -> str:
 
 :root {{
   --bg:{t['bg']}; --surface:{t['surface']}; --input:{t['input']}; --text:{t['text']}; --muted:{t['muted']};
-  --border:{t['border']}; --teal:{t['teal']}; --magenta:{t['magenta']}; --coral:{t['coral']};
+  --border:{t['border']}; --teal:{t['teal']}; --safe:{t['safe']}; --risk:{t['risk']}; --magenta:{t['magenta']}; --coral:{t['coral']};
   --cyan:{t['cyan']}; --indigo:{t['indigo']}; --indigo-hover:{t['indigo_hover']}; --bar:{t['bar']};
 }}
 
@@ -119,7 +119,7 @@ iframe {{ border: 0 !important; color-scheme: normal; }}
 .sn-title {{ font-family: '{FONT_HEADING}', system-ui, sans-serif; font-weight: 700; font-size: 1.7rem; margin: 0; color: var(--text); }}
 .sn-sub {{ color: var(--muted); margin: 0 0 0 14px; font-size: .92rem; }}
 .sn-card {{ background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px 18px; height: 100%; }}
-.sn-card.lower {{ border: 2px solid var(--teal); }}
+.sn-card.lower {{ border: 2px solid var(--safe); }}
 .sn-card h4 {{ margin: 0 0 4px 0; font-size: 1.08rem; }}
 .sn-tag {{ color: var(--muted); font-size: .84rem; margin-bottom: 10px; }}
 .sn-stat {{ display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-top: 1px solid var(--border); font-size: .96rem; color: var(--text); }}
@@ -128,8 +128,8 @@ iframe {{ border: 0 !important; color-scheme: normal; }}
 .sn-bar > span {{ display: block; height: 100%; border-radius: 99px; }}
 .sn-legend {{ display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: .9rem; margin: 8px 0 2px 0; color: var(--text); }}
 .sn-legend .item {{ display: flex; align-items: center; gap: 8px; }}
-.sn-legend .swatch {{ width: 36px; height: 0; border-top: 6px solid var(--teal); }}
-.sn-legend .swatch.thin {{ border-top: 3px solid var(--magenta); }}
+.sn-legend .swatch {{ width: 36px; height: 0; border-top: 6px solid var(--safe); }}
+.sn-legend .swatch.thin {{ border-top: 3px solid var(--risk); }}
 .sn-legend .hazard {{ width: 12px; height: 12px; border-radius: 3px; background: var(--coral); transform: rotate(45deg); }}
 .sn-badge {{ display: inline-block; padding: 2px 10px; border-radius: 99px; font-size: .8rem; font-weight: 600; border: 1px solid var(--coral); color: var(--coral); }}
 .sn-note {{ border-left: 4px solid var(--cyan); background: {t['note']}; padding: 12px 14px; border-radius: 8px; font-size: .94rem; color: var(--text); }}
